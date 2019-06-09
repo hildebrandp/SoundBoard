@@ -22,12 +22,10 @@ namespace SoundBoard
 
         public Boolean createFiles()
         {
+            writeConfigFile(configFiles.GetConfigItems());
+            writeButtonFile(configFiles.GetButtonItems());
 
-                writeConfigFile(configFiles.GetConfigItems());
-                writeButtonFile(configFiles.GetButtonItems());
-
-                return true;
-
+            return true;
         }
 
         public List<configItem> readConfigFile()
@@ -64,7 +62,7 @@ namespace SoundBoard
 
         public void writeButtonFile(List<buttonItem> items)
         {
-            using(StreamWriter w = new StreamWriter(buttonFilePath))
+            using (StreamWriter w = new StreamWriter(buttonFilePath))
             {
                 string json = JsonConvert.SerializeObject(items);
                 w.WriteLine(json);
@@ -81,8 +79,13 @@ namespace SoundBoard
         public string ButtonPicture;
         public string ButtonColor;
         public string ButtonSoundFile;
+        public Boolean ButtonSoundRepeat;
+        public Boolean ButtonCostumTime;
+        public int ButtonTimeStart;
+        public int ButtonTimeEnd;
 
-        public buttonItem(int ButtonID, int ButtonTab, string ButtonName, string ButtonPicture, string ButtonColor, string ButtonSoundFile)
+        public buttonItem(int ButtonID, int ButtonTab, string ButtonName, string ButtonPicture, string ButtonColor, string ButtonSoundFile,
+            Boolean ButtonSoundRepeat, Boolean ButtonCostumTime, int ButtonTimeStart, int ButtonTimeEnd)
         {
             this.ButtonID = ButtonID;
             this.ButtonTab = ButtonTab;
@@ -90,6 +93,10 @@ namespace SoundBoard
             this.ButtonPicture = ButtonPicture;
             this.ButtonColor = ButtonColor;
             this.ButtonSoundFile = ButtonSoundFile;
+            this.ButtonSoundRepeat = ButtonSoundRepeat;
+            this.ButtonCostumTime = ButtonCostumTime;
+            this.ButtonTimeStart = ButtonTimeStart;
+            this.ButtonTimeEnd = ButtonTimeEnd;
         }
     }
 

@@ -11,3 +11,9 @@ D:\Coding\Visual Studio\SoundBoard\SoundBoard\bin\Debug\Newtonsoft.Json.dll
 D:\Coding\Visual Studio\SoundBoard\SoundBoard\bin\Debug\Newtonsoft.Json.xml
 D:\Coding\Visual Studio\SoundBoard\SoundBoard\obj\Debug\SoundBoard.MainApp.resources
 D:\Coding\Visual Studio\SoundBoard\SoundBoard\obj\Debug\SoundBoard.csproj.CopyComplete
+D:\Coding\Visual Studio\SoundBoard\SoundBoard\obj\Debug\SoundBoard.forms.EditTab.resources
+D:\Coding\Visual Studio\SoundBoard\SoundBoard\obj\Debug\SoundBoard.forms.EditButton.resources
+D:\Coding\Visual Studio\SoundBoard\SoundBoard\bin\Debug\NAudio.dll
+D:\Coding\Visual Studio\SoundBoard\SoundBoard\bin\Debug\NAudio.Flac.dll
+D:\Coding\Visual Studio\SoundBoard\SoundBoard\bin\Debug\NAudioUtils.dll
+D:\Coding\Visual Studio\SoundBoard\SoundBoard\bin\Debug\NAudio.xml

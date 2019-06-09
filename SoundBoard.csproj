@@ -48,6 +48,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.9.0\lib\net35\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Flac, Version=1.0.5702.29018, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.Flac.1.0.5702.29018\lib\net45\NAudio.Flac.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudioUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Neel.NAudio.Utilities.1.0.0\lib\net45\NAudioUtils.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -64,13 +73,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonSettings.cs">
+    <Compile Include="ConfigFiles.cs" />
+    <Compile Include="forms\EditButton.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ButtonSettings.Designer.cs">
-      <DependentUpon>ButtonSettings.cs</DependentUpon>
+    <Compile Include="forms\EditButton.Designer.cs">
+      <DependentUpon>EditButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConfigFiles.cs" />
+    <Compile Include="forms\EditTab.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\EditTab.Designer.cs">
+      <DependentUpon>EditTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="HelperClass.cs" />
     <Compile Include="MainApp.cs">
       <SubType>Form</SubType>
@@ -80,6 +95,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="forms\EditButton.resx">
+      <DependentUpon>EditButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\editTab.resx">
+      <DependentUpon>EditTab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainApp.resx">
       <DependentUpon>MainApp.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,6 +142,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ic_action_play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_action_collection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_action_pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_action_stop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -61,12 +61,375 @@ namespace SoundBoard.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Close SoundBoard ähnelt.
+        /// </summary>
+        internal static string ApplicationCloseCaption {
+            get {
+                return ResourceManager.GetString("ApplicationCloseCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Do you really want to close SoundBoard? ähnelt.
+        /// </summary>
+        internal static string ApplicationCloseText {
+            get {
+                return ResourceManager.GetString("ApplicationCloseText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Accept ähnelt.
+        /// </summary>
+        internal static string ButtonAccept {
+            get {
+                return ResourceManager.GetString("ButtonAccept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cancel ähnelt.
+        /// </summary>
+        internal static string ButtonCancel {
+            get {
+                return ResourceManager.GetString("ButtonCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Edit ähnelt.
+        /// </summary>
+        internal static string contextMenuStripButtonEdit {
+            get {
+                return ResourceManager.GetString("contextMenuStripButtonEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move to Tab ähnelt.
+        /// </summary>
+        internal static string contextMenuStripButtonMoveTab {
+            get {
+                return ResourceManager.GetString("contextMenuStripButtonMoveTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remove Button ähnelt.
+        /// </summary>
+        internal static string contextMenuStripButtonRemove {
+            get {
+                return ResourceManager.GetString("contextMenuStripButtonRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add Button ähnelt.
+        /// </summary>
+        internal static string contextMenuStripTabAddButton {
+            get {
+                return ResourceManager.GetString("contextMenuStripTabAddButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Edit ähnelt.
+        /// </summary>
+        internal static string contextMenuStripTabEdit {
+            get {
+                return ResourceManager.GetString("contextMenuStripTabEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Button Name ähnelt.
+        /// </summary>
+        internal static string EditButtonName {
+            get {
+                return ResourceManager.GetString("EditButtonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Button Name is too long. Maximum are 50 Characters. ähnelt.
+        /// </summary>
+        internal static string EditButtonNameTooLong {
+            get {
+                return ResourceManager.GetString("EditButtonNameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Button Name is too short. At least 3 characters are required. ähnelt.
+        /// </summary>
+        internal static string EditButtonNameTooShort {
+            get {
+                return ResourceManager.GetString("EditButtonNameTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click to choose Picture Path ähnelt.
+        /// </summary>
+        internal static string EditButtonPicture {
+            get {
+                return ResourceManager.GetString("EditButtonPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Repeat ähnelt.
+        /// </summary>
+        internal static string EditButtonRepeat {
+            get {
+                return ResourceManager.GetString("EditButtonRepeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click to choose Song Path ähnelt.
+        /// </summary>
+        internal static string EditButtonSong {
+            get {
+                return ResourceManager.GetString("EditButtonSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Song Name: ähnelt.
+        /// </summary>
+        internal static string EditButtonSongName {
+            get {
+                return ResourceManager.GetString("EditButtonSongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sound File is to long. Song should be under 1h. ähnelt.
+        /// </summary>
+        internal static string EditButtonSongTooLong {
+            get {
+                return ResourceManager.GetString("EditButtonSongTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Costum Time ähnelt.
+        /// </summary>
+        internal static string EditButtonTextCostumTime {
+            get {
+                return ResourceManager.GetString("EditButtonTextCostumTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Duration ähnelt.
+        /// </summary>
+        internal static string EditButtonTextDuration {
+            get {
+                return ResourceManager.GetString("EditButtonTextDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End Time: ähnelt.
+        /// </summary>
+        internal static string EditButtonTextEndTime {
+            get {
+                return ResourceManager.GetString("EditButtonTextEndTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Image support only up to 512x512 pixel. ähnelt.
+        /// </summary>
+        internal static string EditButtonTextImageSize {
+            get {
+                return ResourceManager.GetString("EditButtonTextImageSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Button Name: ähnelt.
+        /// </summary>
+        internal static string EditButtonTextNewButton {
+            get {
+                return ResourceManager.GetString("EditButtonTextNewButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Path to Icon: ähnelt.
+        /// </summary>
+        internal static string EditButtonTextPathPicture {
+            get {
+                return ResourceManager.GetString("EditButtonTextPathPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Path to Song: ähnelt.
+        /// </summary>
+        internal static string EditButtonTextPathSong {
+            get {
+                return ResourceManager.GetString("EditButtonTextPathSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Position ähnelt.
+        /// </summary>
+        internal static string EditButtonTextPosition {
+            get {
+                return ResourceManager.GetString("EditButtonTextPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start Time: ähnelt.
+        /// </summary>
+        internal static string EditButtonTextStartTime {
+            get {
+                return ResourceManager.GetString("EditButtonTextStartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End Time should not be greater than Song Duration. ähnelt.
+        /// </summary>
+        internal static string EditButtonTimeEndHigherSong {
+            get {
+                return ResourceManager.GetString("EditButtonTimeEndHigherSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die End Time should not be smaller than Start Time. ähnelt.
+        /// </summary>
+        internal static string EditButtonTimeEndSmallerEnd {
+            get {
+                return ResourceManager.GetString("EditButtonTimeEndSmallerEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start Time should not be greater than End Time. ähnelt.
+        /// </summary>
+        internal static string EditButtonTimeStartHigherEnd {
+            get {
+                return ResourceManager.GetString("EditButtonTimeStartHigherEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start Time should not be greater than Song Duration. ähnelt.
+        /// </summary>
+        internal static string EditButtonTimeStartHigherSong {
+            get {
+                return ResourceManager.GetString("EditButtonTimeStartHigherSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Change Tab Name: ähnelt.
+        /// </summary>
+        internal static string EditTabLabel {
+            get {
+                return ResourceManager.GetString("EditTabLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Tab Name can not be ähnelt.
+        /// </summary>
+        internal static string EditTabNameSettings {
+            get {
+                return ResourceManager.GetString("EditTabNameSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Tab Name is too long. Maximum are 15 Characters. ähnelt.
+        /// </summary>
+        internal static string EditTabNameTooLong {
+            get {
+                return ResourceManager.GetString("EditTabNameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Tab Name is too short. At least 3 characters are required. ähnelt.
+        /// </summary>
+        internal static string EditTabNameTooShort {
+            get {
+                return ResourceManager.GetString("EditTabNameTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Edit Tab: ähnelt.
+        /// </summary>
+        internal static string EditTabTitle {
+            get {
+                return ResourceManager.GetString("EditTabTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_action_collection {
+            get {
+                object obj = ResourceManager.GetObject("ic_action_collection", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_action_pause {
+            get {
+                object obj = ResourceManager.GetObject("ic_action_pause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap ic_action_play {
             get {
                 object obj = ResourceManager.GetObject("ic_action_play", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_action_stop {
+            get {
+                object obj = ResourceManager.GetObject("ic_action_stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings ähnelt.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Warning ähnelt.
+        /// </summary>
+        internal static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
     }

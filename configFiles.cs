@@ -23,7 +23,7 @@ namespace SoundBoard
                 configItems.Add(newConfigItem);
             }
 
-            newConfigItem = new configItem(maxTabs - 1, "Settings", true);
+            newConfigItem = new configItem(maxTabs - 1, Properties.Resources.Settings, true);
             configItems.Add(newConfigItem);
 
             return configItems;
@@ -34,9 +34,9 @@ namespace SoundBoard
             List<buttonItem> buttonItems = new List<buttonItem>();
             buttonItem newButtonItem;
 
-            for(int b = 0; b < defaultButtons; b++)
+            for (int b = 0; b < defaultButtons; b++)
             {
-                newButtonItem = new buttonItem(b, 0, "Sound " + (b + 1), "default", "default", "default");
+                newButtonItem = new buttonItem(b, 0, "Sound " + (b + 1), "default", "default", "default", false, false, 0, 0);
                 buttonItems.Add(newButtonItem);
             }
 
