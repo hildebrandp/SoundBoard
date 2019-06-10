@@ -19,7 +19,6 @@ namespace SoundBoard
         HelperClass helperClass = new HelperClass();
         List<configItem> configItems = new List<configItem>();
         List<buttonItem> buttonItems = new List<buttonItem>();
-        List<List<Button>> buttons = new List<List<Button>>();
 
         ContextMenuStrip contexMenuTab = new ContextMenuStrip();
         ContextMenuStrip contexMenuButton = new ContextMenuStrip();
@@ -74,27 +73,33 @@ namespace SoundBoard
             configItems = helperClass.readConfigFile();
             buttonItems = helperClass.readButtonFile();
 
+            loadButtons(configItems, buttonItems);
+        }
+
+        private void loadButtons(List<configItem> configItems, List<buttonItem> buttonItems)
+        {
             foreach (configItem tabInfo in configItems)
             {
                 tabControl1.TabPages[tabInfo.TabIndex].Text = tabInfo.TabName;
                 tabControl1.TabPages[tabInfo.TabIndex].Font = new Font("Microsoft Sans Serif", 10);
-                buttons.Add(new List<Button>());
+                tabControl1.TabPages[tabInfo.TabIndex].Controls.Clear();
             }
 
+            int[] id = new int[6] { 0, 0, 0, 0, 0, 0 };
             foreach (buttonItem button in buttonItems)
             {
                 Button newButton = new Button();
                 newButton.Font = new Font("Microsoft Tai Le", 12, FontStyle.Bold);
                 newButton.TextAlign = ContentAlignment.BottomCenter;
                 newButton.Text = button.ButtonName;
-                newButton.Name = button.ButtonID.ToString();
+                newButton.Name = id[button.ButtonTab].ToString();
                 newButton.Size = new Size(buttonSize, buttonSize);
                 newButton.Margin = new Padding(buttonMargin);
                 newButton.BackgroundImageLayout = ImageLayout.Stretch;
                 newButton.ContextMenuStrip = contexMenuButton;
                 newButton.Click += new EventHandler(button_Click);
 
-                if (button.ButtonPicture == "default")
+                if (button.ButtonPicture == null || button.ButtonPicture == "default")
                 {
                     newButton.BackgroundImage = Properties.Resources.ic_action_play;
                 }
@@ -104,8 +109,9 @@ namespace SoundBoard
                     newButton.BackgroundImage = bit;
                 }
 
-                buttons[button.ButtonTab].Add(newButton);
                 tabControl1.TabPages[button.ButtonTab].Controls.Add(newButton);
+
+                id[button.ButtonTab]++;
             }
             this.Height = Properties.Settings.Default.WindowHeight;
             this.Width = Properties.Settings.Default.WindowWidth;
@@ -120,7 +126,7 @@ namespace SoundBoard
 
             int maxButtonsHorizontal = windowWidth / (buttonSize + buttonMargin);
 
-            if (buttons.Count == 0)
+            if (buttonItems.Count == 0)
             {
                 return;
             }
@@ -137,7 +143,7 @@ namespace SoundBoard
                     int[] buttonCount = new int[20];
                     int rowNumber = 0;
 
-                    foreach (Button button in buttons[tabInfo.TabIndex])
+                    foreach (Button button in tabControl1.TabPages[tabInfo.TabIndex].Controls)
                     {
                         if (buttonCount[rowNumber] != 0 && buttonCount[rowNumber] % maxButtonsHorizontal == 0)
                         {
@@ -182,38 +188,38 @@ namespace SoundBoard
             }
             else if (item.Text == Properties.Resources.contextMenuStripTabAddButton)
             {
-                using (var buttonEdit = new EditButton(Properties.Resources.contextMenuStripTabAddButton))
+                using (var buttonEdit = new EditButton(buttonItems, Properties.Resources.contextMenuStripTabAddButton))
                 {
                     buttonEdit.StartPosition = FormStartPosition.CenterParent;
                     var dialogResult = buttonEdit.ShowDialog();
 
                     if (dialogResult == DialogResult.OK)
                     {
-                        Button newButton = new Button();
-                        newButton.Font = new Font("Microsoft Tai Le", 12, FontStyle.Bold);
-                        newButton.TextAlign = ContentAlignment.BottomCenter;
-                        newButton.Text = buttonEdit.ButtonName;
-                        newButton.Name = buttonItems.Count().ToString();
-                        newButton.Size = new Size(buttonSize, buttonSize);
-                        newButton.Margin = new Padding(buttonMargin);
-                        newButton.BackgroundImageLayout = ImageLayout.Stretch;
-                        newButton.ContextMenuStrip = contexMenuButton;
-                        newButton.Click += new EventHandler(button_Click);
+                        buttonItem newButtonItem = new buttonItem
+                        {
+                            ButtonTab = sourceControl.TabIndex,
+                            ButtonName = buttonEdit.ButtonName,
+                            ButtonColor = "",
+                            ButtonSoundFile = buttonEdit.ButtonSoundFile,
+                            ButtonSoundRepeat = buttonEdit.ButtonSoundRepeat,
+                            ButtonCustomTime = buttonEdit.ButtonCustomTime,
+                            ButtonTimeStart = buttonEdit.ButtonTimeStart,
+                            ButtonTimeEnd = buttonEdit.ButtonTimeEnd
+                        };
 
                         if (buttonEdit.ButtonPicture == null || buttonEdit.ButtonPicture == "default")
                         {
-                            newButton.BackgroundImage = Properties.Resources.ic_action_play;
+                            newButtonItem.ButtonPicture = "default";
                         }
                         else
                         {
-                            Bitmap bit = new Bitmap(buttonEdit.ButtonPicture);
-                            newButton.BackgroundImage = bit;
+                            newButtonItem.ButtonPicture = buttonEdit.ButtonPicture;
                         }
 
-                        buttons[sourceControl.TabIndex].Add(newButton);
-                        tabControl1.TabPages[sourceControl.TabIndex].Controls.Add(newButton);
+                        buttonItemsChanged = true;
+                        buttonItems.Add(newButtonItem);
 
-                        this.OnResize(EventArgs.Empty);
+                        loadButtons(configItems, buttonItems);
                     }
                 }
             }
@@ -225,8 +231,76 @@ namespace SoundBoard
             ContextMenuStrip menu = sender as ContextMenuStrip;
             Control sourceControl = menu.SourceControl;
 
+            if (item.Text == Properties.Resources.contextMenuStripButtonEdit)
+            {
+                Button buttonToEdit = (Button)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[Int32.Parse(sourceControl.Name)];
 
-            Console.WriteLine("Clicked: " + sourceControl.Name + "  " + item.Text);
+                buttonItem itemToEdit = findButtonItem(buttonToEdit.Text);
+                int itemToEditIndex = buttonItems.IndexOf(itemToEdit);
+
+                using (var buttonEdit = new EditButton(buttonItems, Properties.Resources.contextMenuStripButtonEdit, itemToEdit.ButtonName,
+                    itemToEdit.ButtonPicture, itemToEdit.ButtonColor,itemToEdit.ButtonSoundFile, itemToEdit.ButtonSoundRepeat,
+                    itemToEdit.ButtonCustomTime, itemToEdit.ButtonTimeStart, itemToEdit.ButtonTimeEnd))
+                {
+                    buttonEdit.StartPosition = FormStartPosition.CenterParent;
+                    var dialogResult = buttonEdit.ShowDialog();
+
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        buttonItem newButtonItem = new buttonItem
+                        {
+                            ButtonTab = tabControl1.SelectedIndex,
+                            ButtonName = buttonEdit.ButtonName,
+                            ButtonColor = "",
+                            ButtonSoundFile = buttonEdit.ButtonSoundFile,
+                            ButtonSoundRepeat = buttonEdit.ButtonSoundRepeat,
+                            ButtonCustomTime = buttonEdit.ButtonCustomTime,
+                            ButtonTimeStart = buttonEdit.ButtonTimeStart,
+                            ButtonTimeEnd = buttonEdit.ButtonTimeEnd
+                        };
+
+                        if (buttonEdit.ButtonPicture == null || buttonEdit.ButtonPicture == "default")
+                        {
+                            newButtonItem.ButtonPicture = "default";
+                        }
+                        else
+                        {
+                            newButtonItem.ButtonPicture = buttonEdit.ButtonPicture;
+                        }
+
+                        buttonItemsChanged = true;
+                        buttonItems.RemoveAt(itemToEditIndex);
+                        buttonItems.Insert(itemToEditIndex, newButtonItem);
+
+                        loadButtons(configItems, buttonItems);
+                    }
+                }
+            }
+            else if (item.Text == Properties.Resources.contextMenuStripButtonRemove)
+            {
+                Button buttonToEdit = (Button)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[Int32.Parse(sourceControl.Name)];
+
+                buttonItem itemToEdit = findButtonItem(buttonToEdit.Text);
+                int itemToEditIndex = buttonItems.IndexOf(itemToEdit);
+
+                buttonItemsChanged = true;
+                buttonItems.RemoveAt(itemToEditIndex);
+
+                loadButtons(configItems, buttonItems);
+            }
+        }
+
+        buttonItem findButtonItem(string name)
+        {
+            for (int i = 0; i < buttonItems.Count; i++)
+            {
+                if (buttonItems[i].ButtonName == name)
+                {
+                    return buttonItems[i];
+                }
+            }
+
+            return null;
         }
 
         void button_Click(object sender, EventArgs e)

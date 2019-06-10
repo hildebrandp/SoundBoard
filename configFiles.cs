@@ -36,7 +36,7 @@ namespace SoundBoard
 
             for (int b = 0; b < defaultButtons; b++)
             {
-                newButtonItem = new buttonItem(b, 0, "Sound " + (b + 1), "default", "default", "default", false, false, 0, 0);
+                newButtonItem = new buttonItem(0, "Sound " + (b + 1), "default", "default", "default", false, false, 0, 0);
                 buttonItems.Add(newButtonItem);
             }
 

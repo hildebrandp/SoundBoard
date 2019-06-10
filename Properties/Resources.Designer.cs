@@ -250,6 +250,15 @@ namespace SoundBoard.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The Button Name already exists. Please choose different name. ähnelt.
+        /// </summary>
+        internal static string EditButtonTextNameExists {
+            get {
+                return ResourceManager.GetString("EditButtonTextNameExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die New Button Name: ähnelt.
         /// </summary>
         internal static string EditButtonTextNewButton {

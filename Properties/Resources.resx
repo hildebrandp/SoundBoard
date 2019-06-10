@@ -226,6 +226,9 @@
   <data name="EditButtonSongTooLong" xml:space="preserve">
     <value>Sound File is to long. Song should be under 1h.</value>
   </data>
+  <data name="EditButtonTextNameExists" xml:space="preserve">
+    <value>The Button Name already exists. Please choose different name.</value>
+  </data>
   <data name="EditButtonTextPosition" xml:space="preserve">
     <value>Position</value>
   </data>

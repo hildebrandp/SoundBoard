@@ -34,7 +34,7 @@
             this.pathPicture = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pathSong = new System.Windows.Forms.TextBox();
-            this.costumTime = new System.Windows.Forms.CheckBox();
+            this.customTime = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.timeStart = new System.Windows.Forms.DateTimePicker();
@@ -115,15 +115,15 @@
             // 
             // costumTime
             // 
-            this.costumTime.AutoSize = true;
-            this.costumTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.costumTime.Location = new System.Drawing.Point(17, 183);
-            this.costumTime.Name = "costumTime";
-            this.costumTime.Size = new System.Drawing.Size(106, 24);
-            this.costumTime.TabIndex = 7;
-            this.costumTime.Text = "checkBox1";
-            this.costumTime.UseVisualStyleBackColor = true;
-            this.costumTime.CheckedChanged += new System.EventHandler(this.costumTime_CheckedChanged);
+            this.customTime.AutoSize = true;
+            this.customTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customTime.Location = new System.Drawing.Point(17, 183);
+            this.customTime.Name = "costumTime";
+            this.customTime.Size = new System.Drawing.Size(106, 24);
+            this.customTime.TabIndex = 7;
+            this.customTime.Text = "checkBox1";
+            this.customTime.UseVisualStyleBackColor = true;
+            this.customTime.CheckedChanged += new System.EventHandler(this.costumTime_CheckedChanged);
             // 
             // label4
             // 
@@ -324,7 +324,7 @@
             this.Controls.Add(this.timeStart);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.costumTime);
+            this.Controls.Add(this.customTime);
             this.Controls.Add(this.pathSong);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.pathPicture);
@@ -351,7 +351,7 @@
         private System.Windows.Forms.TextBox pathPicture;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox pathSong;
-        private System.Windows.Forms.CheckBox costumTime;
+        private System.Windows.Forms.CheckBox customTime;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker timeStart;

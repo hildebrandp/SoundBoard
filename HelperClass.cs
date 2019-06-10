@@ -73,28 +73,28 @@ namespace SoundBoard
 
     public class buttonItem
     {
-        public int ButtonID;
         public int ButtonTab;
         public string ButtonName;
         public string ButtonPicture;
         public string ButtonColor;
         public string ButtonSoundFile;
         public Boolean ButtonSoundRepeat;
-        public Boolean ButtonCostumTime;
+        public Boolean ButtonCustomTime;
         public int ButtonTimeStart;
         public int ButtonTimeEnd;
 
-        public buttonItem(int ButtonID, int ButtonTab, string ButtonName, string ButtonPicture, string ButtonColor, string ButtonSoundFile,
-            Boolean ButtonSoundRepeat, Boolean ButtonCostumTime, int ButtonTimeStart, int ButtonTimeEnd)
+        public buttonItem(){}
+
+        public buttonItem(int ButtonTab, string ButtonName, string ButtonPicture, string ButtonColor, string ButtonSoundFile,
+            Boolean ButtonSoundRepeat, Boolean ButtonCustomTime, int ButtonTimeStart, int ButtonTimeEnd)
         {
-            this.ButtonID = ButtonID;
             this.ButtonTab = ButtonTab;
             this.ButtonName = ButtonName;
             this.ButtonPicture = ButtonPicture;
             this.ButtonColor = ButtonColor;
             this.ButtonSoundFile = ButtonSoundFile;
             this.ButtonSoundRepeat = ButtonSoundRepeat;
-            this.ButtonCostumTime = ButtonCostumTime;
+            this.ButtonCustomTime = ButtonCustomTime;
             this.ButtonTimeStart = ButtonTimeStart;
             this.ButtonTimeEnd = ButtonTimeEnd;
         }

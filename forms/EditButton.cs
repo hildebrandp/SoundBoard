@@ -4,11 +4,14 @@ using System.IO;
 using System.Windows.Forms;
 using NAudio.Wave;
 using System.Timers;
+using System.Collections.Generic;
 
 namespace SoundBoard.forms
 {
     public partial class EditButton : Form
     {
+        List<buttonItem> buttonItems;
+
         private Boolean playing = false;
 
         private WaveOutEvent wavePlayer;
@@ -23,21 +26,23 @@ namespace SoundBoard.forms
         public string ButtonColor { get; set; }
         public string ButtonSoundFile { get; set; }
         public Boolean ButtonSoundRepeat { get; set; }
-        public Boolean ButtonCostumTime { get; set; }
+        public Boolean ButtonCustomTime { get; set; }
         public int ButtonTimeStart { get; set; }
         public int ButtonTimeEnd { get; set; }
 
-        public EditButton(string windowTitle)
+        public EditButton(List<buttonItem> buttonItems, string windowTitle)
         {
             InitializeComponent();
+
             this.Text = windowTitle;
+            this.buttonItems = buttonItems;
             label1.Text = Properties.Resources.EditButtonTextNewButton;
             textBox1.Text = Properties.Resources.EditButtonName;
             label2.Text = Properties.Resources.EditButtonTextPathPicture;
             pathPicture.Text = Properties.Resources.EditButtonPicture;
             label3.Text = Properties.Resources.EditButtonTextPathSong;
             pathSong.Text = Properties.Resources.EditButtonSong;
-            costumTime.Text = Properties.Resources.EditButtonTextCostumTime;
+            customTime.Text = Properties.Resources.EditButtonTextCostumTime;
             label4.Text = Properties.Resources.EditButtonTextStartTime;
             label5.Text = Properties.Resources.EditButtonTextEndTime;
             label6.Text = Properties.Resources.EditButtonSongName;
@@ -56,9 +61,75 @@ namespace SoundBoard.forms
             ButtonColor = null;
             ButtonSoundFile = null;
             ButtonSoundRepeat = false;
-            ButtonCostumTime = false;
+            ButtonCustomTime = false;
             ButtonTimeStart = 0;
             ButtonTimeEnd = 0;
+
+            timer = new System.Timers.Timer();
+            timer.Interval = 50;
+            timer.Elapsed += Timer_Elapsed;
+        }
+
+        public EditButton(List<buttonItem> buttonItems, string windowTitle, string ButtonName, string ButtonPicture, string ButtonColor, string ButtonSoundFile, 
+            Boolean ButtonSoundRepeat, Boolean ButtonCustomTime, int ButtonTimeStart, int ButtonTimeEnd)
+        {
+            this.buttonItems = buttonItems;
+            this.ButtonName = ButtonName;
+            this.ButtonPicture = ButtonPicture;
+            this.ButtonColor = ButtonColor;
+            this.ButtonSoundFile = ButtonSoundFile;
+            this.ButtonSoundRepeat = ButtonSoundRepeat;
+            this.ButtonCustomTime = ButtonCustomTime;
+            this.ButtonTimeStart = ButtonTimeStart;
+            this.ButtonTimeEnd = ButtonTimeEnd;
+
+            InitializeComponent();
+            this.Text = windowTitle;
+            label1.Text = Properties.Resources.EditButtonTextNewButton;
+            textBox1.Text = ButtonName;
+            label2.Text = Properties.Resources.EditButtonTextPathPicture;
+            pathPicture.Text = ButtonPicture;
+            label3.Text = Properties.Resources.EditButtonTextPathSong;
+            pathSong.Text = ButtonSoundFile;
+            customTime.Text = Properties.Resources.EditButtonTextCostumTime;
+            customTime.Checked = ButtonCustomTime;
+            label4.Text = Properties.Resources.EditButtonTextStartTime;
+            label5.Text = Properties.Resources.EditButtonTextEndTime;
+            label6.Text = Properties.Resources.EditButtonSongName;
+            label7.Text = Properties.Resources.EditButtonTextDuration;
+            label8.Text = Properties.Resources.EditButtonTextPosition;
+            buttonAccept.Text = Properties.Resources.ButtonAccept;
+            buttonCancel.Text = Properties.Resources.ButtonCancel;
+            buttonPlayPause.Image = Properties.Resources.ic_action_play;
+            repeat.Text = Properties.Resources.EditButtonRepeat;
+            repeat.Checked = ButtonSoundRepeat;
+
+            if (ButtonTimeStart == 0)
+            {
+                timeStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 00);
+            }
+            else
+            {
+                int minutes = ButtonTimeStart / 60;
+                int seconds = ButtonTimeStart % 60;
+                timeStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, minutes, seconds);
+            }
+
+            if (ButtonTimeStart == 0)
+            {
+                timeEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 00);
+            }
+            else
+            {
+                int minutes = ButtonTimeStart / 60;
+                int seconds = ButtonTimeStart % 60;
+                timeEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, minutes, seconds);
+            }
+
+            if (ButtonSoundFile.Length > 0)
+            {
+                testAudioFile(ButtonSoundFile);
+            }
 
             timer = new System.Timers.Timer();
             timer.Interval = 50;
@@ -87,7 +158,7 @@ namespace SoundBoard.forms
                 else
                 {
                     pictureBox1.Image = buttonIcon;
-                    pathPicture.Text = Path.GetFileName(file);
+                    pathPicture.Text = file;
                     ButtonPicture = file;
                 }
             }
@@ -103,64 +174,74 @@ namespace SoundBoard.forms
             {
                 string file = openDialog.FileName;
 
-                audioFileReader = new AudioFileReader(file);
+                testAudioFile(file);
+            }
+        }
 
-                if (audioFileReader.CanRead)
+        private void testAudioFile(string file)
+        {
+            if (file == null || file == "default")
+            {
+                return;
+            }
+
+            audioFileReader = new AudioFileReader(file);
+
+            if (audioFileReader.CanRead)
+            {
+                if (audioFileReader.TotalTime.TotalMinutes >= 60)
                 {
-                    if (audioFileReader.TotalTime.TotalMinutes >= 60)
-                    {
-                        MessageBox.Show(Properties.Resources.EditButtonSongTooLong, Properties.Resources.Warning);
-                        songDuration.Text = "";
-                        pathSong.Text = Properties.Resources.EditButtonSong;
-                        textBox2.Text = "";
-                        ButtonSoundFile = null;
-
-                        buttonPlayPause.Enabled = false;
-                        return;
-                    }
-
-                    var duration = audioFileReader.TotalTime.Minutes.ToString("00") + ":" + audioFileReader.TotalTime.Seconds.ToString("00") + "." + audioFileReader.TotalTime.Milliseconds.ToString("0");
-                    songDuration.Text = duration.ToString();
-                    pathSong.Text = Path.GetFileName(file);
-                    textBox2.Text = Path.GetFileNameWithoutExtension(file);
-                    ButtonSoundFile = file;
-
-                    buttonPlayPause.Enabled = true;
-                    songProgress.Value = 0;
-                    songPosition.Text = "00:00.000";
-                    songTime = audioFileReader.TotalTime;
-                    timeEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, songTime.Minutes, songTime.Seconds);
-
-                    if (textBox1.Text == Properties.Resources.EditButtonName)
-                    {
-                        textBox1.Text = Path.GetFileNameWithoutExtension(file);
-                    }
-                }
-                else
-                {
+                    MessageBox.Show(Properties.Resources.EditButtonSongTooLong, Properties.Resources.Warning);
                     songDuration.Text = "";
                     pathSong.Text = Properties.Resources.EditButtonSong;
                     textBox2.Text = "";
                     ButtonSoundFile = null;
 
                     buttonPlayPause.Enabled = false;
+                    return;
                 }
 
-                audioFileReader = null;
+                var duration = audioFileReader.TotalTime.Minutes.ToString("00") + ":" + audioFileReader.TotalTime.Seconds.ToString("00") + "." + audioFileReader.TotalTime.Milliseconds.ToString("0");
+                songDuration.Text = duration.ToString();
+                pathSong.Text = file;
+                textBox2.Text = Path.GetFileNameWithoutExtension(file);
+                ButtonSoundFile = file;
+
+                buttonPlayPause.Enabled = true;
+                songProgress.Value = 0;
+                songPosition.Text = "00:00.000";
+                songTime = audioFileReader.TotalTime;
+                timeEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, songTime.Minutes, songTime.Seconds);
+
+                if (textBox1.Text == Properties.Resources.EditButtonName)
+                {
+                    textBox1.Text = Path.GetFileNameWithoutExtension(file);
+                }
             }
+            else
+            {
+                songDuration.Text = "";
+                pathSong.Text = Properties.Resources.EditButtonSong;
+                textBox2.Text = "";
+                ButtonSoundFile = null;
+
+                buttonPlayPause.Enabled = false;
+            }
+
+            audioFileReader = null;
         }
 
         private void costumTime_CheckedChanged(object sender, EventArgs e)
         {
-            if (costumTime.Checked)
+            if (customTime.Checked)
             {
-                ButtonCostumTime = true;
+                ButtonCustomTime = true;
                 timeStart.Enabled = true;
                 timeEnd.Enabled = true;
             }
             else
             {
-                ButtonCostumTime = false;
+                ButtonCustomTime = false;
                 timeStart.Enabled = false;
                 timeEnd.Enabled = false;
             }
@@ -242,9 +323,9 @@ namespace SoundBoard.forms
             buttonPlayPause.Image = Properties.Resources.ic_action_play;
 
             timer?.Stop();
-            wavePlayer.Dispose();
+            wavePlayer?.Dispose();
+            audioFileReader?.Dispose();
             wavePlayer = null;
-            audioFileReader.Dispose();
             audioFileReader = null;
         }
 
@@ -270,6 +351,10 @@ namespace SoundBoard.forms
             {
                 MessageBox.Show(Properties.Resources.EditButtonNameTooLong, Properties.Resources.Warning);
             }
+            else if (checkIfNameExists(textBox1.Text))
+            {
+                MessageBox.Show(Properties.Resources.EditButtonTextNameExists, Properties.Resources.Warning);
+            }
             else
             {
                 ButtonName = textBox1.Text.ToString();
@@ -279,6 +364,19 @@ namespace SoundBoard.forms
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+        }
+
+        private Boolean checkIfNameExists(string name)
+        {
+            for (int i = 0; i < buttonItems.Count; i++)
+            {
+                if (buttonItems[i].ButtonName == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
