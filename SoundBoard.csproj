@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioPlayer.cs" />
     <Compile Include="ConfigFiles.cs" />
     <Compile Include="forms\EditButton.cs">
       <SubType>Form</SubType>
@@ -151,6 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ic_action_stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_action_stop1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

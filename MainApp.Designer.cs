@@ -129,7 +129,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(795, 461);
             this.Controls.Add(this.tabControl1);
             this.MinimumSize = new System.Drawing.Size(811, 500);

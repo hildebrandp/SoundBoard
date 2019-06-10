@@ -17,6 +17,8 @@ namespace SoundBoard
     public partial class MainApp : Form
     {
         HelperClass helperClass = new HelperClass();
+        AudioPlayer audioPlayer = new AudioPlayer();
+
         List<configItem> configItems = new List<configItem>();
         List<buttonItem> buttonItems = new List<buttonItem>();
 
@@ -98,6 +100,7 @@ namespace SoundBoard
                 newButton.BackgroundImageLayout = ImageLayout.Stretch;
                 newButton.ContextMenuStrip = contexMenuButton;
                 newButton.Click += new EventHandler(button_Click);
+                newButton.ImageAlign = ContentAlignment.MiddleCenter;
 
                 if (button.ButtonPicture == null || button.ButtonPicture == "default")
                 {
@@ -113,6 +116,7 @@ namespace SoundBoard
 
                 id[button.ButtonTab]++;
             }
+
             this.Height = Properties.Settings.Default.WindowHeight;
             this.Width = Properties.Settings.Default.WindowWidth;
 
@@ -132,8 +136,8 @@ namespace SoundBoard
             }
             else
             {
-                Properties.Settings.Default.WindowHeight = windowHeight;
-                Properties.Settings.Default.WindowWidth = windowWidth;
+                Properties.Settings.Default.WindowHeight = this.Height;
+                Properties.Settings.Default.WindowWidth = this.Width;
             }
 
             foreach (configItem tabInfo in configItems)
@@ -207,9 +211,9 @@ namespace SoundBoard
                             ButtonTimeEnd = buttonEdit.ButtonTimeEnd
                         };
 
-                        if (buttonEdit.ButtonPicture == null || buttonEdit.ButtonPicture == "default")
+                        if (buttonEdit.ButtonPicture == null)
                         {
-                            newButtonItem.ButtonPicture = "default";
+                            newButtonItem.ButtonPicture = null;
                         }
                         else
                         {
@@ -238,7 +242,7 @@ namespace SoundBoard
                 buttonItem itemToEdit = findButtonItem(buttonToEdit.Text);
                 int itemToEditIndex = buttonItems.IndexOf(itemToEdit);
 
-                using (var buttonEdit = new EditButton(buttonItems, Properties.Resources.contextMenuStripButtonEdit, itemToEdit.ButtonName,
+                using (var buttonEdit = new EditButton(buttonItems, itemToEditIndex, Properties.Resources.contextMenuStripButtonEdit, itemToEdit.ButtonName,
                     itemToEdit.ButtonPicture, itemToEdit.ButtonColor,itemToEdit.ButtonSoundFile, itemToEdit.ButtonSoundRepeat,
                     itemToEdit.ButtonCustomTime, itemToEdit.ButtonTimeStart, itemToEdit.ButtonTimeEnd))
                 {
@@ -259,9 +263,9 @@ namespace SoundBoard
                             ButtonTimeEnd = buttonEdit.ButtonTimeEnd
                         };
 
-                        if (buttonEdit.ButtonPicture == null || buttonEdit.ButtonPicture == "default")
+                        if (buttonEdit.ButtonPicture == null)
                         {
-                            newButtonItem.ButtonPicture = "default";
+                            newButtonItem.ButtonPicture = null;
                         }
                         else
                         {
@@ -290,6 +294,41 @@ namespace SoundBoard
             }
         }
 
+        void button_Click(object sender, EventArgs e)
+        {
+            var pressedButton = (Button)sender;
+            
+            buttonItem buttonToPlay = findButtonItem(pressedButton.Text);
+            int buttonToPlayTab = buttonToPlay.ButtonTab;
+            int buttonToPlayIndex = tabControl1.TabPages[tabControl1.SelectedIndex].Controls.IndexOf(pressedButton);
+
+            AudioStream newAudioStream = new AudioStream
+            {
+                ButtonTab = buttonToPlayTab,
+                ButtonIndex = buttonToPlayIndex,
+                ButtonName = buttonToPlay.ButtonName,
+                ButtonSoundFile = buttonToPlay.ButtonSoundFile,
+                ButtonSoundRepeat = buttonToPlay.ButtonSoundRepeat,
+                ButtonCustomTime = buttonToPlay.ButtonCustomTime,
+                ButtonTimeStart = buttonToPlay.ButtonTimeStart,
+                ButtonTimeEnd = buttonToPlay.ButtonTimeEnd
+            };
+
+            audioPlayer.AddNewAudioStream(newAudioStream, this);
+        }
+
+        public void SetButtonImage(int tabIndex, int buttonIndex)
+        {
+            Button buttonToEdit = (Button)tabControl1.TabPages[tabIndex].Controls[buttonIndex];
+            buttonToEdit.Image = Properties.Resources.ic_action_stop_black;
+        }
+
+        public void RemoveButtonImage(int tabIndex, int buttonIndex)
+        {
+            Button buttonToEdit = (Button)tabControl1.TabPages[tabIndex].Controls[buttonIndex];
+            buttonToEdit.Image = null;
+        }
+
         buttonItem findButtonItem(string name)
         {
             for (int i = 0; i < buttonItems.Count; i++)
@@ -301,12 +340,6 @@ namespace SoundBoard
             }
 
             return null;
-        }
-
-        void button_Click(object sender, EventArgs e)
-        {
-            var button = (Button)sender;
-            Console.WriteLine("Clicked: " + button.Name);
         }
 
         private void MainApp_FormClosing(object sender, FormClosingEventArgs e)
@@ -324,6 +357,8 @@ namespace SoundBoard
                     helperClass.writeButtonFile(buttonItems);
                 }
 
+                Properties.Settings.Default.WindowHeight = this.Height;
+                Properties.Settings.Default.WindowWidth = this.Width;
                 Properties.Settings.Default.Save();
                 Console.WriteLine("Closing Application");
             }

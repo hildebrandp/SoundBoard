@@ -12,6 +12,7 @@ namespace SoundBoard.forms
     {
         List<buttonItem> buttonItems;
 
+        private int editIndex = -1;
         private Boolean playing = false;
 
         private WaveOutEvent wavePlayer;
@@ -70,10 +71,11 @@ namespace SoundBoard.forms
             timer.Elapsed += Timer_Elapsed;
         }
 
-        public EditButton(List<buttonItem> buttonItems, string windowTitle, string ButtonName, string ButtonPicture, string ButtonColor, string ButtonSoundFile, 
+        public EditButton(List<buttonItem> buttonItems, int editIndex, string windowTitle, string ButtonName, string ButtonPicture, string ButtonColor, string ButtonSoundFile, 
             Boolean ButtonSoundRepeat, Boolean ButtonCustomTime, int ButtonTimeStart, int ButtonTimeEnd)
         {
             this.buttonItems = buttonItems;
+            this.editIndex = editIndex;
             this.ButtonName = ButtonName;
             this.ButtonPicture = ButtonPicture;
             this.ButtonColor = ButtonColor;
@@ -88,9 +90,9 @@ namespace SoundBoard.forms
             label1.Text = Properties.Resources.EditButtonTextNewButton;
             textBox1.Text = ButtonName;
             label2.Text = Properties.Resources.EditButtonTextPathPicture;
-            pathPicture.Text = ButtonPicture;
+            pathPicture.Text = ButtonPicture != null ? ButtonPicture : Properties.Resources.EditButtonPicture;
             label3.Text = Properties.Resources.EditButtonTextPathSong;
-            pathSong.Text = ButtonSoundFile;
+            pathSong.Text = ButtonSoundFile != null ? ButtonSoundFile : Properties.Resources.EditButtonSong;
             customTime.Text = Properties.Resources.EditButtonTextCostumTime;
             customTime.Checked = ButtonCustomTime;
             label4.Text = Properties.Resources.EditButtonTextStartTime;
@@ -126,7 +128,7 @@ namespace SoundBoard.forms
                 timeEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, minutes, seconds);
             }
 
-            if (ButtonSoundFile.Length > 0)
+            if (ButtonSoundFile != null && ButtonSoundFile.Length > 0)
             {
                 testAudioFile(ButtonSoundFile);
             }
@@ -351,7 +353,7 @@ namespace SoundBoard.forms
             {
                 MessageBox.Show(Properties.Resources.EditButtonNameTooLong, Properties.Resources.Warning);
             }
-            else if (checkIfNameExists(textBox1.Text))
+            else if (checkIfNameExists(editIndex, textBox1.Text))
             {
                 MessageBox.Show(Properties.Resources.EditButtonTextNameExists, Properties.Resources.Warning);
             }
@@ -366,11 +368,11 @@ namespace SoundBoard.forms
             }
         }
 
-        private Boolean checkIfNameExists(string name)
+        private Boolean checkIfNameExists(int index, string name)
         {
             for (int i = 0; i < buttonItems.Count; i++)
             {
-                if (buttonItems[i].ButtonName == name)
+                if (i != editIndex && buttonItems[i].ButtonName == name)
                 {
                     return true;
                 }

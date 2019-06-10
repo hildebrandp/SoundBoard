@@ -113,12 +113,12 @@
             this.pathSong.TabIndex = 6;
             this.pathSong.Click += new System.EventHandler(this.pathSong_Click);
             // 
-            // costumTime
+            // customTime
             // 
             this.customTime.AutoSize = true;
             this.customTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customTime.Location = new System.Drawing.Point(17, 183);
-            this.customTime.Name = "costumTime";
+            this.customTime.Name = "customTime";
             this.customTime.Size = new System.Drawing.Size(106, 24);
             this.customTime.TabIndex = 7;
             this.customTime.Text = "checkBox1";
